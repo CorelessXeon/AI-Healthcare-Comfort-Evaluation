@@ -1,0 +1,23 @@
+
+# R
+.Rhistory
+.Rproj.user
+.RData
+.Ruserdata
+
+# data
+data_raw/
+*.RData
+*.sav
+*.tab
+
+# outputs
+output/
+data_clean/
+
+# renv
+renv/library/
+
+# OS
+.DS_Store
+Thumbs.db
