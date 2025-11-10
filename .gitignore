@@ -1,13 +1,15 @@
 
+
+
 # R
 .Rhistory
-.Rproj.user
+.Rproj.user/
 .RData
 .Ruserdata
+.Rprofile
+
 
 # data
-data_raw/
-*.RData
 *.sav
 *.tab
 

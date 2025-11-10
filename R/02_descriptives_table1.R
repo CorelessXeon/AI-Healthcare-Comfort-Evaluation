@@ -51,7 +51,7 @@ age_by_gender <- df %>%
   # add code column like in the paper (1) (2) ...
   mutate(`Age Category (Code)` = as.character(age_new), .before = 1)
 
-readr::write_csv(age_by_gender, here("output", "table1_age_by_gender.csv"))
+# readr::write_csv(age_by_gender, here("output", "table1_age_by_gender.csv"))
 
 # --- 3. INCOME × gender ---------------------------------------------
 income_by_gender <- df %>%
@@ -69,7 +69,7 @@ income_by_gender <- df %>%
   arrange(Q55) %>%
   mutate(`Income (Code)` = as.character(Q55), .before = 1)
 
-readr::write_csv(income_by_gender, here("output", "table1_income_by_gender.csv"))
+# readr::write_csv(income_by_gender, here("output", "table1_income_by_gender.csv"))
 
 # --- 4. EDUCATION × gender -------------------------------------------
 edu_by_gender <- df %>%
@@ -87,7 +87,7 @@ edu_by_gender <- df %>%
   arrange(Q66) %>%
   mutate(`Education (Code)` = as.character(Q66), .before = 1)
 
-readr::write_csv(edu_by_gender, here("output", "table1_education_by_gender.csv"))
+# readr::write_csv(edu_by_gender, here("output", "table1_education_by_gender.csv"))
 
 # --- 5. optional: combine into a single long table -------------------
 # this will stack age / income / education in one CSV

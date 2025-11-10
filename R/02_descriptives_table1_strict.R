@@ -54,7 +54,7 @@ age_gt <- age_by_gender |>
   tab_header("Table 1A. Age by gender (strict sample)") |>
   sub_missing(everything(), missing_text = "0")
 
-gtsave(age_gt, here("output", "table1_age_by_gender_strict.html"))
+# gtsave(age_gt, here("output", "table1_age_by_gender_strict.html"))
 
 # --- 3. INCOME × gender ---------------------------------------------
 income_by_gender <- df %>%
@@ -77,7 +77,7 @@ income_gt <- income_by_gender |>
   tab_header("Table 1B. Income by gender (strict sample)") |>
   sub_missing(everything(), missing_text = "0")
 
-gtsave(income_gt, here("output", "table1_income_by_gender_strict.html"))
+# gtsave(income_gt, here("output", "table1_income_by_gender_strict.html"))
 
 # --- 4. EDUCATION × gender -------------------------------------------
 edu_by_gender <- df %>%
@@ -100,7 +100,7 @@ edu_gt <- edu_by_gender |>
   tab_header("Table 1C. Education by gender (strict sample)") |>
   sub_missing(everything(), missing_text = "0")
 
-gtsave(edu_gt, here("output", "table1_education_by_gender_strict.html"))
+# gtsave(edu_gt, here("output", "table1_education_by_gender_strict.html"))
 
 # --- 5. corrected: combine into a single tidy table -------------------
 
@@ -140,7 +140,7 @@ table1_combined <- bind_rows(
 combined_gt <- table1_combined |>
   gt() |>
   tab_header("Table 1. Descriptive statistics (strict sample, combined)") |>
-  fmt_missing(everything(), missing_text = "0")
+  sub_missing(everything(), missing_text = "0")
 
 gtsave(combined_gt, here("output", "table1_combined_strict.html"))
 message("Strict-sample HTML tables written to /output")
