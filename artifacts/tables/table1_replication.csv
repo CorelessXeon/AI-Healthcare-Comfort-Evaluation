@@ -1,0 +1,20 @@
+Factor,Age Category (Code),Sample Size (Male - 1),Sample Size (Female - 2),Sample Size (Other - 3)
+Age in years,16–24 years (1),292,622,32
+Age in years,25–34 years (2),737,951,20
+Age in years,35–44 years (3),965,945,21
+Age in years,45–54 years (4),1087,1053,12
+Age in years,55+ years (5),2059,1740,17
+Income,"< $24,999 (1)",378,579,28
+Income,"$25,000-$49,999 (2)",855,1091,24
+Income,"$50,000-$79,999 (3)",1165,1250,18
+Income,"$80,000-$99,000 (4)",857,804,9
+Income,"$100,000-$149,999 (5)",1146,978,14
+Income,"$150,000-$249,999 (6)",591,506,6
+Income,"$250,000+ (7)",148,103,3
+Education,Highschool (1),966,1243,41
+Education,Apprenticeship/Trades (2),369,228,2
+Education,College/CEGEP (3),1141,1451,19
+Education,University degree (4),1852,1793,25
+Education,Masters (5),650,493,11
+Education,PhD (6),109,69,1
+Education,Medical/paramedical (7),53,34,3

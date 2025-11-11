@@ -17,19 +17,143 @@ library(broom)
 library(plotly)
 library(dplyr)
 library(tidyr)
-
+library(MASS)
 # 1. Load cleaned dataset ---------------------------------------------
-data_path <- here("artifacts", "cleaned_dataset_used_for_modelling.csv")
+data_path <- here("model_df.csv")
 df <- read_csv(data_path)
-df <- df %>%
-  mutate(age_code = as.numeric(factor(age5, 
-    levels = c("16–24 years", "25–34 years", "35–44 years", "45–54 years", "55+ years"),
-    ordered = TRUE))) %>%
-  mutate(gender_code = as.numeric(factor(gender, 
-    levels = c("male", "female", "other"))))
+# we need to predict y-hat values for Q40 to Q43 and save them in the dataframe
 
-#select only the income = 4 and education = 4 (income == "$80,000-$99,000" and education == "University degree")
-df <- df %>% filter(income == "$80,000-$99,000", education == "University degree")
+mod_q40 <- readRDS("artifacts/models/q40_model.rds")
+mod_q41 <- readRDS("artifacts/models/q41_model.rds")
+mod_q42 <- readRDS("artifacts/models/q42_model.rds")
+mod_q43 <- readRDS("artifacts/models/q43_model.rds")
+
+# we just need one to extract the levels of ordinal variables
+mf <- mod_q40$model
+
+
+plot_question_surface <- function(model, df, question_name, save_dir = "artifacts/plots", file_type = "html") {
+
+  # --- 1. Build prediction grid ----------------------------------------------
+  pred_grid <- expand.grid(
+    age5      = levels(mf$age5),
+    gender    = levels(mf$gender),
+    education = levels(mf$education)[4], 
+    income    = levels(mf$income)[4]     
+  )
+
+  # --- 2. Predict probabilities ------------------------------------------------
+  probs <- predict(model, newdata = pred_grid, type = "probs")
+
+  # Convert levels (columns) to numeric scores
+  levels_y <- seq_len(ncol(probs))
+  pred_grid$mean_score <- as.numeric(probs %*% levels_y)
+
+
+  # sorted unique values for axes
+  age_levels    <- levels(pred_grid$age5)     # 5 categories
+  gender_levels <- levels(pred_grid$gender)   # 3 categories
+
+  # wide matrix in correct order
+  zmat <- pred_grid %>%
+    mutate(age5 = factor(age5, levels = age_levels)) %>%
+    tidyr::pivot_wider(
+      names_from = gender,
+      values_from = mean_score
+    ) %>%
+    arrange(age5)
+
+  z_mat <- as.matrix(zmat[, rev(gender_levels)])
+  # numeric positions for surface plot
+  x_num <- seq_along(age_levels)       # 1 2 3 4 5
+  y_num <- seq_along(gender_levels)    # 1 2 3
+
+  print('z_mat')
+  print(z_mat)
+  # --- 4. Plot ----------------------------------------------------------------
+ p <- plot_ly(
+    x = 1:ncol(z_mat),               # 3,2,1 instead of 1,2,3
+    y = 1:nrow(z_mat),
+    z = z_mat,      # reorder columns of matrix!
+    type = "surface"
+) %>%
+  layout(
+    title = paste(question_name, "- Predicted Mean Score"),
+    scene = list(
+      yaxis = list(
+        title = "Age",
+        tickmode = "array",
+        tickvals = 1:nrow(z_mat),
+        ticktext = age_levels
+      ),
+      xaxis = list(
+        title = "Gender",
+        tickmode = "array",
+        tickvals = 1:ncol(z_mat),
+        ticktext = rev(gender_levels)   # flipped labels
+      ),
+      zaxis = list(title = "Mean Score")
+    )
+  )
+  
+    # --- 5. Save plot -----------------------------------------------------------
+  if (!dir.exists(save_dir)) dir.create(save_dir, recursive = TRUE)
+
+  file_path <- file.path(save_dir, paste0(question_name, ".", file_type))
+
+  if (file_type == "html") {
+  htmlwidgets::saveWidget(p, file_path, selfcontained = FALSE)
+} else if (file_type == "png") {
+  plotly::orca(p, file_path)
+} else {
+  warning("Unsupported file type: choose 'html' or 'png'")
+}
+
+  return(p)
+}
+
+
+
+
+plot_q40 <- plot_question_surface(mod_q40, df, "Q40")
+plot_q41 <- plot_question_surface(mod_q41, df, "Q41")
+plot_q42 <- plot_question_surface(mod_q42, df, "Q42")
+plot_q43 <- plot_question_surface(mod_q43, df, "Q43")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 2. create function that makes 3d plot for a given question ----------------
 make_3d_plot <- function(data, xaxis, yaxis, zaxis,
@@ -113,10 +237,10 @@ make_3d_plot(
   data = df,
   xaxis = "age_code",
   yaxis = "gender_code",
-  zaxis = "q40_o",
+  zaxis = "q40_p",
   title = "Knowledge about AI",
   notes = "Y-hat Surface Plot Age code vs Gender",
-  filename = "ai_knowledge.html",
+  filename = "ai_knowledge_y_hat.html",
   x_labels = c("16–24", "25–34", "35–44", "45–54", "55+"),
   y_labels = c("Male", "Female", "Other"),
   z_ticks = seq(2.2, 3.1, by = 0.1),
@@ -170,3 +294,17 @@ make_3d_plot(
   z_ticks = seq(2.3, 2.8, by = 0.1),
   z_labels = as.character(seq(2.30, 2.80, by = 0.1))
 )
+
+
+
+
+
+df_summary <- df %>%
+  mutate(q40_p = as.numeric(as.character(q40_p))) %>%
+  dplyr::group_by(gender_code, age_code) %>%
+  dplyr::summarise(
+    mean_q40_p = mean(q40_p, na.rm = TRUE),
+    sum_q40_p = sum(q40_p, na.rm = TRUE),
+    n = dplyr::n()
+  ) %>%
+  dplyr::ungroup()
