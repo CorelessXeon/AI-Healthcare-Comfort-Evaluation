@@ -180,7 +180,7 @@ The meanings of the independent and dependent variables are summarized as follow
 #### Independent Variables
 
 | Variable Name | Label | Value | Description |
-|:----------------|:---------------------|:----------------|:----------------|
+|:---|:---|:---|:---|
 | **age_new** | Respondent’s age group | 1 | 16–24 years |
 |  |  | 2 | 25–34 years |
 |  |  | 3 | 35–54 years |
@@ -219,7 +219,7 @@ For binary logistic regression models, responses were recoded as:\
 `1/2 → 0 (Low)` and `3/4 → 1 (High)`.
 
 | Variable | Question | Value | Meaning |
-|:-----------------|:-------------------|:-----------------|:-----------------|
+|:---|:---|:---|:---|
 | **Q40** | *How knowledgeable are you about what artificial intelligence (AI) is?* | 1 | Not at all knowledgeable |
 |  |  | 2 | Not very knowledgeable |
 |  |  | 3 | Somewhat knowledgeable |
@@ -242,7 +242,7 @@ For binary logistic regression models, responses were recoded as:\
 #### Missing Value Codes
 
 | Type | Code | Description | Treatment |
-|:-----------------|:-----------------|:-----------------|:-----------------|
+|:---|:---|:---|:---|
 | Valid responses | 1–4 | Substantive answers | Keep |
 | “Other (specify)” | 96 | Respondent provided other answer | `NA` |
 | “Prefer not to answer” / “Refused” | 97–98 | Non-response / refusal | `NA` |
@@ -253,7 +253,7 @@ For binary logistic regression models, responses were recoded as:\
 #### Variable Roles in Regression Models
 
 | Variable | Type | Reference Group | Role in Model |
-|:-----------------|:-----------------|:-----------------|:-----------------|
+|:---|:---|:---|:---|
 | **age_new** | Factor | 16–24 years | Control for age |
 | **gender** | Factor | Male | Control for gender |
 | **Q55 (income)** | Factor | \< \$24,999 | Control for income |

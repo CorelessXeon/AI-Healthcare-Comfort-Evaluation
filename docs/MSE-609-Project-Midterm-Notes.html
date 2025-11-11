@@ -431,6 +431,7 @@ environment</strong> (non-uploaded files are noted).</p>
 <pre><code>MSE609-Group11-Project/
 │
 ├── 📂 data_raw/                         # Raw data files (from Borealis Dataverse)
+│   ├── Infoway CDHS 2024 SPSS Raw Data_for Dataverse.RData # New data for extention not used yet
 │   ├── ATS2021 Dataset_Dataverse posting.RData # Actually used
 │   ├── ATS2021 Dataset_Dataverse posting.sav   # Not used
 │   └── ATS2021 Dataset_Dataverse posting.tab   # Not used
@@ -493,6 +494,9 @@ environment</strong> (non-uploaded files are noted).</p>
 <h4>☁️ Cloud (GitHub Repository) Structure</h4>
 <pre><code>MSE609-Group11-Project/
 │
+├── 📂 data_raw/
+
+│   └── ATS2021 Dataset_Dataverse posting.RData
 ├── 📁 data_clean/          # Retain cleaned datasets only (no raw data)
 │   ├── clean_data.rds
 │   ├── clean_data_strict.rds
@@ -553,31 +557,16 @@ The total sample size (N = 12,052) matches the description in <a href="https://w
 <p>The meanings of the independent and dependent variables are
 summarized as follows (see corresponding code documentation for
 details).</p>
-</div>
-</div>
-<div id="variables-and-coding-scheme" class="section level2">
-<h2>2.1 Variables and Coding Scheme</h2>
-<p>This section summarizes all <strong>independent</strong> and
-<strong>dependent variables</strong> used in the project, based on the
-cleaned dataset (<code>clean_data.rds</code>).<br />
-Each variable includes its label, coding scheme, and treatment of
-missing values.</p>
 <hr />
-<div id="independent-variables" class="section level3">
-<h3>🧩 Independent Variables</h3>
-</div>
-</div>
-<div id="variables-and-coding-scheme-1" class="section level2">
-<h2>2.1 Variables and Coding Scheme</h2>
-<p>This section summarizes all <strong>independent</strong> and
-<strong>dependent variables</strong> used in the project, based on the
-cleaned dataset (<code>clean_data.rds</code>).<br />
-Each variable includes its label, coding scheme, and treatment of
-missing values.</p>
-<hr />
-<div id="independent-variables-1" class="section level3">
-<h3>🧩 Independent Variables</h3>
+<div id="independent-variables" class="section level4">
+<h4>Independent Variables</h4>
 <table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Variable Name</th>
@@ -617,42 +606,114 @@ missing values.</p>
 <td align="left">5</td>
 <td align="left">65+ years</td>
 </tr>
+<tr class="even">
+<td align="left"><strong>gender</strong></td>
+<td align="left">Respondent’s gender</td>
+<td align="left">1</td>
+<td align="left">Male</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">2</td>
+<td align="left">Female</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">3</td>
+<td align="left">Other / Non-binary</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Q55</strong></td>
+<td align="left">Total annual household income (before taxes)</td>
+<td align="left">1</td>
+<td align="left">&lt; $24,999</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">2</td>
+<td align="left">$25,000–$49,999</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">3</td>
+<td align="left">$50,000–$79,999</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">4</td>
+<td align="left">$80,000–$99,999</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">5</td>
+<td align="left">$100,000–$149,999</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">6</td>
+<td align="left">$150,000–$249,999</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">7</td>
+<td align="left">≥ $250,000</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Q66</strong></td>
+<td align="left">Highest level of education completed</td>
+<td align="left">1</td>
+<td align="left">Highschool</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">2</td>
+<td align="left">Apprenticeship / Trades</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">3</td>
+<td align="left">College / CEGEP</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">4</td>
+<td align="left">University degree</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">5</td>
+<td align="left">Masters</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">6</td>
+<td align="left">PhD</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">7</td>
+<td align="left">Medical / Paramedical</td>
+</tr>
 </tbody>
 </table>
-<p>erived from birth year (survey year − birth year). Corresponds to
-<em>Age Code</em> in the paper. Reference group: <strong>16–24
-years</strong>. |</p>
-<div class="line-block"><strong>gender</strong> | Respondent’s gender |
-1 | Male |<br />
-| | 2 | Female |<br />
-| | 3 | Other / Non-binary |</div>
-<p>Matches the paper’s definition <em>(1 = Male, 2 = Female, 3 =
-Other)</em>. Reference group: <strong>Male</strong>. |</p>
-<div class="line-block"><strong>Q55</strong> | Total annual household
-income (before taxes) | 1 | &lt; $24,999 |<br />
-| | 2 | $25,000–$49,999 |<br />
-| | 3 | $50,000–$79,999 |<br />
-| | 4 | $80,000–$99,999 |<br />
-| | 5 | $100,000–$149,999 |<br />
-| | 6 | $150,000–$249,999 |<br />
-| | 7 | ≥ $250,000 |</div>
-<p>Reresents household income level. Reference group: <strong>&lt;
-$24,999</strong>. Values 96–99 are treated as <code>NA</code>. |</p>
-<div class="line-block"><strong>Q66</strong> | Highest level of
-education completed | 1 | Highschool |<br />
-| | 2 | Apprenticeship / Trades |<br />
-| | 3 | College / CEGEP |<br />
-| | 4 | University degree |<br />
-| | 5 | Masters |<br />
-| | 6 | PhD |<br />
-| | 7 | Medical / Paramedical |</div>
-<p>Education level code used in Table A1. Reference group:
-<strong>Highschool</strong>. Values 96–99 are treated as
-<code>NA</code>. |</p>
 <hr />
 </div>
-<div id="dependent-variables-q40q43" class="section level3">
-<h3>🎯 Dependent Variables (Q40–Q43)</h3>
+<div id="dependent-variables-q40q43" class="section level4">
+<h4>Dependent Variables (Q40–Q43)</h4>
 <p>All four dependent variables are <strong>four-point Likert
 scale</strong> items, coded as follows:</p>
 <blockquote>
@@ -705,38 +766,89 @@ intelligence (AI) is?</em></td>
 <td align="left">4</td>
 <td align="left">Very knowledgeable</td>
 </tr>
+<tr class="odd">
+<td align="left"><strong>Q41</strong></td>
+<td align="left"><em>How comfortable are you with AI being used as a
+tool in healthcare?</em></td>
+<td align="left">1</td>
+<td align="left">Not at all comfortable</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">2</td>
+<td align="left">Not very comfortable</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">3</td>
+<td align="left">Somewhat comfortable</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">4</td>
+<td align="left">Very comfortable</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Q42</strong></td>
+<td align="left"><em>How comfortable are you with scientists using
+personal health data for AI research as long as informed consent has
+been provided by the patient?</em></td>
+<td align="left">1</td>
+<td align="left">Not at all comfortable</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">2</td>
+<td align="left">Not very comfortable</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">3</td>
+<td align="left">Somewhat comfortable</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">4</td>
+<td align="left">Very comfortable</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Q43</strong></td>
+<td align="left"><em>How comfortable are you with scientists using
+personal health data for AI research without informed consent as long as
+it is deidentified?</em></td>
+<td align="left">1</td>
+<td align="left">Not at all comfortable</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">2</td>
+<td align="left">Not very comfortable</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">3</td>
+<td align="left">Somewhat comfortable</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">4</td>
+<td align="left">Very comfortable</td>
+</tr>
 </tbody>
 </table>
-<p>Used in Fig. 1 and Appendix A1 as the main dependent variable. |</p>
-<div class="line-block"><strong>Q41</strong> | <em>How comfortable are
-you with AI being used as a tool in healthcare?</em> | 1 | Not at all
-comfortable |<br />
-| | 2 | Not very comfortable |<br />
-| | 3 | Somewhat comfortable |<br />
-| | 4 | Very comfortable |</div>
-<p>Used in Fig. 2 (AI in healthcare comfort). |</p>
-<div class="line-block"><strong>Q42</strong> | <em>How comfortable are
-you with scientists using personal health data for AI research as long
-as informed consent has been provided by the patient?</em> | 1 | Not at
-all comfortable |<br />
-| | 2 | Not very comfortable |<br />
-| | 3 | Somewhat comfortable |<br />
-| | 4 | Very comfortable |</div>
-<p>Used in Fig. 3 (comfort with AI data use <strong>with
-consent</strong>). |</p>
-<div class="line-block"><strong>Q43</strong> | <em>How comfortable are
-you with scientists using personal health data for AI research without
-informed consent as long as it is deidentified?</em> | 1 | Not at all
-comfortable |<br />
-| | 2 | Not very comfortable |<br />
-| | 3 | Somewhat comfortable |<br />
-| | 4 | Very comfortable |</div>
-<p>Used in Fig. 4 (comfort with AI data use <strong>without
-consent</strong>). |</p>
 <hr />
 </div>
-<div id="missing-value-codes" class="section level3">
-<h3>Missing Value Codes</h3>
+<div id="missing-value-codes" class="section level4">
+<h4>Missing Value Codes</h4>
 <table>
 <colgroup>
 <col width="25%" />
@@ -779,9 +891,72 @@ consent</strong>). |</p>
 </tr>
 </tbody>
 </table>
-<p>In the data cleaning script (<code>01_data_cleaning.R</code>), these
-were recoded as:</p>
 <hr />
+</div>
+<div id="variable-roles-in-regression-models" class="section level4">
+<h4>Variable Roles in Regression Models</h4>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Type</th>
+<th align="left">Reference Group</th>
+<th align="left">Role in Model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>age_new</strong></td>
+<td align="left">Factor</td>
+<td align="left">16–24 years</td>
+<td align="left">Control for age</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>gender</strong></td>
+<td align="left">Factor</td>
+<td align="left">Male</td>
+<td align="left">Control for gender</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Q55 (income)</strong></td>
+<td align="left">Factor</td>
+<td align="left">&lt; $24,999</td>
+<td align="left">Control for income</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Q66 (education)</strong></td>
+<td align="left">Factor</td>
+<td align="left">Highschool</td>
+<td align="left">Control for education</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Q40–Q43</strong></td>
+<td align="left">Ordinal (1–4) or Binary (0–1)</td>
+<td align="left">—</td>
+<td align="left">Dependent variables</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="quick-summary" class="section level4">
+<h4>Quick Summary</h4>
+<p>The cleaned dataset includes four dependent variables (Q40–Q43)
+representing respondents’ knowledge and comfort levels toward AI,
+measured on a four-point Likert scale (1 = Not at all, 4 = Very).<br />
+Independent variables include demographic controls: <strong>age group
+(age_new)</strong>, <strong>gender</strong>, <strong>household income
+(Q55)</strong>, and <strong>education level (Q66)</strong>.<br />
+All responses coded as 96–99 were treated as missing values (NA) during
+the data cleaning process.</p>
+<hr />
+</div>
 <div id="data-filtering-methods" class="section level4">
 <h4>Data Filtering Methods</h4>
 <p>There are <strong>two filtering strategies</strong> applied during
@@ -806,8 +981,8 @@ matching the values shown in Appendix A1 of the paper.</li>
 <li>Only keep respondents with valid responses for <strong>all eight
 variables</strong> (four independent + four dependent).<br />
 </li>
-<li>Any record containing invalid (non-1/2/3/4) answers in Q40–Q43 is
-discarded.<br />
+<li><strong>Any record containing invalid</strong> (non-1/2/3/4) answers
+in Q40–Q43 is <strong>discarded</strong>.<br />
 </li>
 <li>The resulting sample size is <strong>9,198</strong>, identical to
 that reported in the paper’s Table 1 (Section 3.1).</li>
@@ -819,8 +994,10 @@ descriptive and regression analyses.</p>
 <p>The code implementing these steps is contained in
 <code>01_data_cleaning.R</code>.<br />
 Input: <code>ATS2021 Dataset_Dataverse posting.RData</code><br />
-Output: cleaned <code>.rds</code> and <code>.csv</code> files used by
-subsequent scripts.</p>
+Output: <code>clean_data.rds</code>,<code>clean_data.csv</code>,
+<code>clean_data_strict.rds</code> , <code>clean_data_strict.csv</code>
+, <code>clean_summary.csv</code> ,
+<code>clean_summary_strict.csv</code>.</p>
 <hr />
 </div>
 </div>
@@ -832,10 +1009,10 @@ The alternative script <code>02_descriptives_table1.R</code> remains
 relevant for future exploration, as it corresponds to the
 <em>available-case</em> approach mentioned above.</p>
 <ul>
-<li>Input: cleaned dataset outputs from Step 1<br />
+<li>Input: <code>clean_data_strict.rds</code><br />
 </li>
-<li>Output: CSV and summary tables under the <code>output/</code>
-directory.</li>
+<li>Output: <code>table1_combined_strict.html</code> under the
+<code>output/</code> directory.</li>
 </ul>
 <hr />
 </div>
@@ -921,11 +1098,10 @@ i.e., how the analysis can be expanded beyond replication.</li>
 </ul>
 <hr />
 <p><strong>Repository:</strong> <a href="https://github.com/CorelessXeon/MSE609-Group11-Project" class="uri">https://github.com/CorelessXeon/MSE609-Group11-Project</a><br />
-<strong>Prepared by:</strong> <em>Gary (Zang Wentao)</em><br />
+<strong>Prepared by:</strong> <em>Gary (Wentao Zang)</em><br />
 <strong>Course:</strong> <em>MSE 609 – Quantitative Data
 Analysis</em><br />
-<strong>Date:</strong> <em>Midterm Progress Report – November
-2025</em></p>
+<strong>Date:</strong> <em>Midterm Notes – November 10, 2025</em></p>
 </div>
 </div>
 </div>

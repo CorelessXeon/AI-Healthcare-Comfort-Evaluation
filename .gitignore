@@ -23,3 +23,6 @@ renv/library/
 # OS
 .DS_Store
 Thumbs.db
+
+# Ignore temporary drafts and notes
+docs/drafts/
