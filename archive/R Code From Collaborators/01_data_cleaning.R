@@ -18,7 +18,7 @@ library(here)
 # --- 1. paths ---------------------------------------------------------------
 # raw RData should be placed under data_raw/
 # change the file name below if yours is different
-raw_rdata_path <- here("data_raw", "ATS2021 Dataset_Dataverse posting.RData")
+raw_rdata_path <- here("data","data_raw", "ATS2021 Dataset_Dataverse posting.RData")
 
 # paper-like outputs
 clean_rds_path        <- here("data_clean", "clean_data.rds")

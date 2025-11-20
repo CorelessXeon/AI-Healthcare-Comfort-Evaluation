@@ -23,7 +23,13 @@ process_different_dataset(dataset_path= here("data", "data_raw", "CDHS2023_Datas
                             "q43_un" = "q34",
                             "age_new" = "q1_age_cat", #note age is 16-24 then 25-34 then 35-54 then 55-64 then 65+
                             "gender" = "q5_recoded", # note gender is 1 for female, 2 for male 3 for other
-                            "q66_un" = "q48", # education is 1 no certificate, diplona or degree, 2 Secondary (high) school diploma or equivalency certificate, 3 Apprenticeship or trades certificate or diploma, College, 4 CEGEP or other non-university certificate or diploma, 5 University certificate or diploma below bachelor level, 6 University certificate, diploma or degree at bachelor level or above
+                            "q66_un" = "q48", # education is 
+                            # 1 no certificate, diplona or degree, 
+                            # 2 Secondary (high) school diploma or equivalency certificate,
+                            # 3 Apprenticeship or trades certificate or diploma, College,
+                            # 4 CEGEP or other non-university certificate or diploma,
+                            # 5 University certificate or diploma below bachelor level,
+                            # 6 University certificate, diploma or degree at bachelor level or above
                             "q55_un" = "q40"),
                             gender_levels = c("female", "male", "other"),
                             income_levels = c("< $50,000", "$50,000-$60,000", "$60,000-$70,000", "$70,000-$80,000", "$80,000-$90,000", "$100,000-$150,000", ">$150,000"),
