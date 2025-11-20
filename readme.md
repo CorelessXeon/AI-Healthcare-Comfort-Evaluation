@@ -1,57 +1,38 @@
-# MSE 609 Project Midterm Notes
+# MSE 609 Project Post-Midterm Notes
 
 ## 0. Progress Overview
 
+### 0.1. GitHub Repository Setup – 95%
 
-### 0.1. GitHub Repository Setup – 100%
-
--   README usage instructions and one-command run (`run_all.R`) added  
-    (Section 4, updated by Leila – Nov 2025).
-
-
+-   Clean up needed.
 
 ### 0.2. Data Cleaning – 100%
 
 -   Completed.
-    -   Kai’s questions: resolved (see details below).
 
 ### 0.3. Replication of Descriptive Tables (Table 1) – 100%
 
 -   Completed.
 
-### 0.4. Replication of Regression Analysis 3D Figures (Fig. 1–4) – 0%
+### 0.4. Replication of Regression Analysis 3D Figures (Fig. 1–4) – 100%
 
--   In progress.
-
+-   Completed.
 
 ### 0.5. Replication of Appendix A1 Table 1 – 100%
 
--   Ordinal logistic regression models for Q40–Q43 replicated.
--   Combined table exported to `output/tableA1_combined.html`.
--   Remaining differences vs. the published Appendix A1 are documented in  
-    `docs/AppendixA1_Writeup.md` and `docs/Gaps.md` (prepared by Leila).
+-   Completed.
 
+### 0.6. Course Extension – 80%
 
-### 0.6. Integrated Midterm Report – 100%
+-   Almost completed, just waiting for cleaning up and summary.
 
--   Completed (this document).
+### 0.7. Final Project Report – 5%
 
-### 0.7. Course Extension – 0%
-
--   Not started, expected completion next week.
-
-### 0.8. Final Project Report – 0%
-
--   Not started, expected completion the week after next.
+-   In progress.
 
 ------------------------------------------------------------------------
 
 ## 1. Introduction
-
-The purpose of this document is to ensure that all group members clearly understand the work and progress completed by Kai and me, as well as the underlying logic and methodology behind it. The goal is to help everyone **stay on the same page** and avoid getting lost during the replication process.
-
-The project’s GitHub repository has been published and can be accessed here:\
--\> [MSE609-Group11-Project Repository](https://github.com/CorelessXeon/MSE609-Group11-Project)
 
 Below is an overview of the current package file structure for both the **local environment** and **cloud environment** (non-uploaded files are noted).
 
@@ -84,17 +65,6 @@ MSE609-Group11-Project/
 │   ├── 04_export_regression_tables.R    # Export combined regression tables (Appendix A1)
 │   └── 05_plots_Q40_to_Q43.R            # Generate regression-based 3D plots (Fig. 1–4)
 │
-├── 📂 output/                           # Model outputs and replicated tables
-│   ├── table1_combined.csv
-│   ├── table1_combined_strict.html
-│   ├── tableA1_combined.csv
-│   ├── tableA1_combined.html
-│   ├── model_Q40_tidy.csv
-│   ├── model_Q41_tidy.csv
-│   ├── model_Q42_tidy.csv
-│   ├── model_Q43_tidy.csv
-│   └── models_Q40_to_Q43.rds
-│
 ├── 📂 docs/                             # Supporting documents and references
 │   ├── Appendix A. Supplementary data.docx
 │   ├── Knowledge is not all you need for comfort in use of AI in healthcare.pdf
@@ -118,8 +88,7 @@ MSE609-Group11-Project/
 │
 ├── .gitignore
 ├── MSE609-Group11-Project.Rproj
-├── renv.lock
-└── folder_snapshot.txt
+└── renv.lock
 ```
 
 ------------------------------------------------------------------------
@@ -129,13 +98,6 @@ MSE609-Group11-Project/
 ```         
 MSE609-Group11-Project/
 │
-├── 📂 data_raw/
-
-│   └── ATS2021 Dataset_Dataverse posting.RData
-├── 📁 data_clean/          # Retain cleaned datasets only (no raw data)
-│   ├── clean_data.rds
-│   ├── clean_data_strict.rds
-│   └── clean_summary_strict.csv
 │
 ├── 📁 R/                   # All reproducible R scripts
 │   ├── 01_data_cleaning.R
@@ -189,7 +151,7 @@ The meanings of the independent and dependent variables are summarized as follow
 #### Independent Variables
 
 | Variable Name | Label | Value | Description |
-|:----------------|:---------------------|:----------------|:----------------|
+|:-----------------|:-----------------|:-----------------|:-----------------|
 | **age_new** | Respondent’s age group | 1 | 16–24 years |
 |  |  | 2 | 25–34 years |
 |  |  | 3 | 35–54 years |
@@ -224,11 +186,8 @@ All four dependent variables are **four-point Likert scale** items, coded as fol
 > 3 = Somewhat\
 > 4 = Very
 
-For binary logistic regression models, responses were recoded as:\
-`1/2 → 0 (Low)` and `3/4 → 1 (High)`.
-
 | Variable | Question | Value | Meaning |
-|:-----------------|:-------------------|:-----------------|:-----------------|
+|:-----------------|:-----------------|:-----------------|:-----------------|
 | **Q40** | *How knowledgeable are you about what artificial intelligence (AI) is?* | 1 | Not at all knowledgeable |
 |  |  | 2 | Not very knowledgeable |
 |  |  | 3 | Somewhat knowledgeable |
@@ -297,7 +256,7 @@ We will need to **discuss these two data filtering strategies** in the report to
 
 The code implementing these steps is contained in `01_data_cleaning.R`.\
 Input: `ATS2021 Dataset_Dataverse posting.RData`\
-Output: `clean_data.rds`,`clean_data.csv`, `clean_data_strict.rds` , `clean_data_strict.csv` , `clean_summary.csv` , `clean_summary_strict.csv`.
+Output: `clean_data.rds`,`clean_data.csv`, `clean_data_strict.rds` , `clean_data_strict.csv` .
 
 ------------------------------------------------------------------------
 
@@ -317,29 +276,12 @@ This step involves two stages, handled by separate scripts as suggested by ChatG
 
 #### Step 1: Model estimation (`03_models_Q40_to_Q43.R`)
 
-We constructed regression models for Q40–Q43 using the **`glm()`** function in R (generalized linear model).\
-However, the paper’s authors used **Ordinal Logistic Regression**, while our implementation with `glm(..., family = binomial)` can only handle binary outcomes.
-
-Hence, the four-level responses (1 = Not at all knowledgeable → 4 = Very knowledgeable) were dichotomized: - Responses **1–2 → 0 (Low knowledge)**\
-- Responses **3–4 → 1 (High knowledge)**
-
-By contrast, Kai implemented the proper **Ordinal Logistic Regression**, which directly handles ordered multi-category variables — and his approach aligns more precisely with the paper’s methodology.
+**Ordinal Logistic Regression**, which directly handles ordered multi-category variables — and his approach aligns more precisely with the paper’s methodology.
 
 #### Step 2: Table generation (`04_export_regression_tables.R`)
 
-This script converts model outputs into formatted tables for comparison with Appendix A1.
-
-At the time of these midterm notes, Kai’s regression results still differed from the
-published Appendix A1 table, and further investigation was required.
-
-🔄 **Update (Nov 2025, Leila):**  
-We re-estimated the models using ordinal logistic regression with strict filtering
-and matched reference categories. The combined table in
-`output/tableA1_combined.html` now closely aligns with the published Appendix A1.
-Remaining small differences in odds ratios and p-values are documented in  
-`docs/AppendixA1_Writeup.md` and `docs/Gaps.md`.
-
-
+This script converts model outputs into formatted tables for comparison with Appendix A1.\
+However, discrepancies remain: Kai’s regression results still differ from the published Appendix A1 table, indicating further investigation is required to pinpoint the cause.
 
 ------------------------------------------------------------------------
 
@@ -359,30 +301,20 @@ It remains uncertain whether equivalent 3D visualization can be fully reproduced
 -   ✅ Acquired the 2021 ATS health survey dataset.\
 -   ✅ Completed data cleaning workflow and scripts.\
 -   ✅ Successfully replicated descriptive statistics (Table 1).
--   ✅ Replicated Appendix A1 (ordinal logistic regression) and documented discrepancies (Leila, Nov 2025).
-
 
 ### 3.2. Issues to Resolve
 
 -   🔹 Understand the methodological differences between the two data filtering strategies.\
 -   🔹 Compare and analyze the discrepancy between two modeling approaches (GLM vs. Ordinal Logistic).\
--   🔹 Communicate and summarize the documented differences between our models and the published Appendix A1 (see `docs/Gaps.md`).
+-   🔹 Identify why Kai’s regression results differ from the paper’s Appendix A1 table.\
 -   🔹 Optimize variable naming and file output structure.
 
-### 3.3. Next Steps
-
--   🔸 Continue replication of regression figures (Q40–Q43) using R or equivalent tools.\
--   🔸 Discuss potential **Project Extension directions**, i.e., how the analysis can be expanded beyond replication.
-
-------------------------------------------------------------------------
-
-**Repository:** <https://github.com/CorelessXeon/MSE609-Group11-Project>\
+**Repository:** [https://github.com/CorelessXeon/MSE609-Group11-Projec](https://github.com/CorelessXeon/MSE609-Group11-Project){.uri}\
 **Prepared by:** *Gary (Wentao Zang)*\
 **Course:** *MSE 609 – Quantitative Data Analysis*\
-**Date:** *Midterm Notes – November 10, 2025*
+**Date:** *Midterm Notes – November 20, 2025*
 
----
----
+------------------------------------------------------------------------
 
 ## 4. How to Run the Project (added by Leila)
 
@@ -390,62 +322,58 @@ Anyone can reproduce the analysis using RStudio by following these steps.
 
 ### 4.1. Requirements
 
--   🔹R version ≥ 4.3
-
--   🔹RStudio Desktop
-
--   🔹Internet connection (for first-time package installation)
+-   R version ≥ 4.5.2
+-   RStudio Desktop
+-   Internet connection (for first-time package installation)
 
 ### 4.2. Setup
 
--   🔹Clone the repository:
+1.  Clone the repository:
 
-  git clone https://github.com/CorelessXeon/MSE609-Group11-Project.git
+```         
+git clone https://github.com/CorelessXeon/MSE609-Group11-Project.git
+```
 
-  or download the ZIP from GitHub and unzip it locally.
+2.  Open the file MSE609-Group11-Project.Rproj in RStudio.
 
--   🔹Open the file MSE609-Group11-Project.Rproj in RStudio.
+In the Console, install and restore the environment:
 
--   🔹In the R console, install and restore the project environment:
+```         
+install.packages("renv")
+renv::restore()
+```
 
-  install.packages("renv")   # only if not already installed
-  renv::restore()            # installs the package versions from renv.lock
+### 4.3. Run the full pipeline Either source each script in order:
 
-### 4.3. Run the full pipeline
-
-#### Option A – step by step
-
-  source("R/01_data_cleaning.R")
-  source("R/02_descriptives_table1_strict.R")
-  source("R/03_models_Q40_to_Q43.R")
-  source("R/04_export_regression_tables.R")
-  # source("R/05_plots_Q40_to_Q43.R")  # enable when 3D figures are finalized
-
-
-#### Option B – recommended (one command)
-
-  source("run_all.R")
+```         
+source("R/01_data_cleaning.R")
+source("R/02_descriptives_table1.R")
+source("R/03_ordinal_logistic_regression.R")
+source("R/04_plots_Q40_to_Q43.R")
+source("R/05_different_dataset.R")  
+source("R/06_plots_different_dataset.R")  
+```
 
 ### 4.4. Outputs
 
-All generated files appear in the output/ folder, for example:
+All generated files appear in the artifacts/ folder:
 
-- 🔹table1_combined_strict.html – Descriptive statistics
+-   table1_replication.html – Descriptive statistics
 
-- 🔹tableA1_combined.html – Replicated regression table (Appendix A1)
+-   appendix_table_1A_replication.html – Replicated regression table
 
-- 🔹models_Q40_to_Q43.rds – Saved model objects
+-   q4X_olr_model.rds – Saved model objects
 
-- 🔹ai_comfort_surface.html – 3D visualization (when ready)
+-   Q4X.html – 3D visualization (when ready)
 
-Clean datasets are saved in the data_clean/ folder.
+-   Clean datasets are saved in data/.
 
 ### 4.5. Notes
 
-- 🔹Dataset used: data_raw/ATS2021 Dataset_Dataverse posting.RData
+-   The dataset used: ATS2021 Dataset_Dataverse posting.RData
 
-- 🔹Filtering approach: strict (complete-case) for replication consistency.
+-   Filtering approach: strict (complete-case) for replication consistency.
 
-- 🔹To test the alternative available-case filtering, edit R/01_data_cleaning.R.
+-   To test the alternative available-case filtering, edit 01_data_cleaning.R.
 
-✅ After following these steps, the analysis should reproduce all current outputs.
+After following these steps, the analysis should reproduce all outputs exactly as in the paper.

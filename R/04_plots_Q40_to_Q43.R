@@ -23,7 +23,7 @@ df$gender_num    <- convert_to_num(df$gender, lvl_gender)
 
 # DOE Pro (SigmaZone) uses Response Surface Methodology (RSM)
 predictors <- c("age_num", "gender_num", "educ_num", "income_num")
-# y=β0​+i∑​βi​xi​(main effects)+i<j∑​βij​xi​xj​(interactions)+i∑​βii​xi2​(quadratics)
+# y=β0*+i∑ βi*xi (main effects)+i<j∑ βij*xi*xj (interactions)+i∑ βii*xi2 (quadratics)
 
 f_poly <- as.formula(
   paste(
@@ -33,7 +33,24 @@ f_poly <- as.formula(
 )
 
 # fit lm gives the formula
-# \(y=\beta _{0}\)\(+\beta _{1}\cdot \text{age}_{\text{num}}+\beta _{2}\cdot \text{gender}_{\text{num}}+\beta _{3}\cdot \text{educ}_{\text{num}}+\beta _{4}\cdot \text{income}_{\text{num}}\)\(+\beta _{5}\cdot \text{age}_{\text{num}}^{2}+\beta _{6}\cdot \text{gender}_{\text{num}}^{2}+\beta _{7}\cdot \text{educ}_{\text{num}}^{2}+\beta _{8}\cdot \text{income}_{\text{num}}^{2}\)\(+\beta _{9}\cdot (\text{age}_{\text{num}}\cdot \text{gender}_{\text{num}})+\beta _{10}\cdot (\text{age}_{\text{num}}\cdot \text{educ}_{\text{num}})+\beta _{11}\cdot (\text{age}_{\text{num}}\cdot \text{income}_{\text{num}})\)\(+\beta _{12}\cdot (\text{gender}_{\text{num}}\cdot \text{educ}_{\text{num}})+\beta _{13}\cdot (\text{gender}_{\text{num}}\cdot \text{income}_{\text{num}})\)\(+\beta _{14}\cdot (\text{educ}_{\text{num}}\cdot \text{income}_{\text{num}})\)\(+\epsilon \)
+# Model specification:
+# y = β0 
+#   + β1 * age_num 
+#   + β2 * gender_num 
+#   + β3 * educ_num 
+#   + β4 * income_num
+#   + β5 * age_num^2
+#   + β6 * gender_num^2
+#   + β7 * educ_num^2
+#   + β8 * income_num^2
+#   + β9  * (age_num * gender_num)
+#   + β10 * (age_num * educ_num)
+#   + β11 * (age_num * income_num)
+#   + β12 * (gender_num * educ_num)
+#   + β13 * (gender_num * income_num)
+#   + β14 * (educ_num * income_num)
+#   + ε
+
 
 
 # fitting model for all outcomes
