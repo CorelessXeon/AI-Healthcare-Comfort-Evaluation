@@ -50,7 +50,7 @@ convert_to_num <- function(x, levels) {
 # ---------------------------------------------------------
 plot_question_surface_poly <- function(model, df, question_name,
                                        save_dir = "artifacts/plots",
-                                       file_type = "html") {
+                                       file_type = "html", education_level_fix, income_level_fix, message, gender_tick_vals= 1:3, age_tick_vals= 1:5) {
 
   # --------------------------------------------
   # 1. Build grid for plotting
@@ -58,15 +58,17 @@ plot_question_surface_poly <- function(model, df, question_name,
   # age_vals    <- sort(unique(df$age_num))
   # gender_vals <- sort(unique(df$gender_num))
   # to meke the plot smooth, we use irrealistic values in between integers
+  if (length(income_level_fix) > 1) {
+    df$income_num[df$income_num %in% income_level_fix] <- income_level_fix[1]
+  }
   age_vals    <- seq(1, 5, length.out = 100)
   gender_vals <- seq(1, 3, length.out = 100)
   grid <- expand.grid(
     age_num    = age_vals,
     gender_num = gender_vals,
-    educ_num   = 4,
-    income_num = 4 
+    educ_num   = education_level_fix,
+    income_num = income_level_fix[1]
   )
-
   # --------------------------------------------
   # 2. Predict fitted values from polynomial regression
   # --------------------------------------------
@@ -97,17 +99,30 @@ plot_question_surface_poly <- function(model, df, question_name,
           title = "Gender (coded)",
           range = c(3, 1),                # <--- explicit reversed range (max -> min) 
           tickmode = "array",
-          tickvals = 1:3,
+          tickvals = gender_tick_vals,
           ticktext = levels(df$gender)    # will appear left->right as male, female, other
         ),
         yaxis = list(
           title = "Age (coded)",
           tickmode = "array",
-          tickvals = 1:5,
+          tickvals = age_tick_vals,
           ticktext = levels(df$age5)
         ),
         zaxis = list(title = "Predicted Score")
+      ),
+
+        annotations = list(
+        list(
+          text = message,
+          x = 0.02, y = 0.98,
+          xref = "paper", yref = "paper",
+          align = "left",
+          showarrow = FALSE,
+          font = list(size = 14)
+        )
       )
+
+
     )
 
   # --------------------------------------------
@@ -302,3 +317,32 @@ process_different_dataset <- function(dataset_path, question_mapping, gender_lev
   readr::write_csv(cdhs, glue("data/{filename}.csv"))
   saveRDS(cdhs, glue("data/{filename}.rds"))
 }
+
+
+#-----------------------------------------------------------------
+# extenion variable levels
+#---------------------------------------------------------
+
+lvl_education_2023 <- c("No certificate, diploma or degree",
+  "Secondary (high) school diploma or equivalency certificate",
+  "Apprenticeship or trades certificate or diploma",
+  "College, CEGEP or other non-university certificate or diploma",
+  "University certificate or diploma below bachelor level",
+  "University certificate, diploma or degree at bachelor level or above")
+
+lvl_age_2023 <- c("16–24 years", "25–34 years", "35–44 years", "45–54 years", "55–64 years", "65+ years")
+lvl_gender_2023 <- c("female", "male", "other")
+lvl_income_2023 <- c("< $50,000", "$50,000-$60,000", "$60,000-$70,000", "$70,000-$80,000", "$80,000-$90,000", "$100,000-$150,000", ">$150,000")
+
+
+lvl_education_2024 <- c("No certificate, diploma or degree",
+                        "Secondary (high) school diploma or equivalency certificate",
+                        "Apprenticeship or trades certificate or diploma",
+                        "College, CEGEP or other non-university certificate or diploma",
+                        "University certificate or diploma below bachelor level",
+                        "University certificate, diploma or degree at bachelor level",
+                        "University certificate, diploma or degree at the graduate level")
+
+lvl_age_2024 <- c("16–17 years", "18–24 years", "25–34 years", "35–44 years", "45–54 years", "55–64 years", "65–74 years", "75+ years")
+lvl_gender_2024 <- c("female", "male", "other")
+lvl_income_2024 <- c("< $40,000", "$40,000-$59,000", "$60,000-$79,000", "$80,000-$99,000", "$100,000-$149,000", ">$150,000")

@@ -46,7 +46,7 @@ models <- lapply(outcomes, function(resp) {
 
 names(models) <- outcomes
 
-plot_q40 <- plot_question_surface_poly(models$q40_o, df, "Q40")
-plot_q41 <- plot_question_surface_poly(models$q41_o, df, "Q41")
-plot_q42 <- plot_question_surface_poly(models$q42_o, df, "Q42")
-plot_q43 <- plot_question_surface_poly(models$q43_o, df, "Q43")
+plot_q40 <- plot_question_surface_poly(models$q40_o, df, "Q40", education_level_fix = 4, income_level_fix = 4, message = "income= $80,000-$99,000 and education= University degree")
+plot_q41 <- plot_question_surface_poly(models$q41_o, df, "Q41", education_level_fix = 4, income_level_fix = 4, message = "income= $80,000-$99,000 and education= University degree")
+plot_q42 <- plot_question_surface_poly(models$q42_o, df, "Q42", education_level_fix = 4, income_level_fix = 4, message = "income= $80,000-$99,000 and education= University degree")
+plot_q43 <- plot_question_surface_poly(models$q43_o, df, "Q43", education_level_fix = 4, income_level_fix = 4, message = "income= $80,000-$99,000 and education= University degree")

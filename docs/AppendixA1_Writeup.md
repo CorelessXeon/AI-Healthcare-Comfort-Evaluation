@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Appendix A1 Replication – Ordinal Logistic Regression  
 Prepared by **Leila Safari**, Group 11
 
