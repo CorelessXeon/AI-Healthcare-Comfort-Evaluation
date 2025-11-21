@@ -13,10 +13,33 @@
 # ---- 1) Load cleaned data ----
 model_df <- readRDS("data/cleaned_dataset.rds")
 
-# ---- 2) grouping and building frequency tables ----
+
+# ---- 2) strict filtering method ----
+q_vars <- c("q40_o", "q41_o", "q42_o", "q43_o")
+
+sam_size_std_filter <- nrow(model_df)
+
+# complete.cases: drop any rows that contain NA
+keep_idx <- stats::complete.cases(model_df[, q_vars])
+
+model_df_strict <- model_df[keep_idx, , drop = FALSE]
+
+sam_size_strict_filter <- nrow(model_df_strict)
+
+message(
+  sprintf("Strict filter on q40_o–q43_o: %d -> %d rows kept.",
+          sam_size_std_filter, sam_size_strict_filter)
+)
+
+
+saveRDS(model_df_strict, "data/cleaned_dataset_strict.rds")
+
+
+
+# ---- 3) grouping and building frequency tables ----
 #     ---- Age (group by gender) ----
 tbl_age <- cross_tab_counts(
-  df = model_df,
+  df = model_df_strict,
   factor_var = age5,
   factor_levels = lvl_age,
   group_var = gender,
@@ -26,7 +49,7 @@ tbl_age <- cross_tab_counts(
 
 #     ---- Income (group by gender) ----
 tbl_inc <- cross_tab_counts(
-  df = model_df,
+  df = model_df_strict,
   factor_var = income,
   factor_levels = lvl_income,
   group_var = gender,
@@ -36,7 +59,7 @@ tbl_inc <- cross_tab_counts(
 
 #     ---- education (group by gender) ----
 tbl_edu <- cross_tab_counts(
-  df = model_df,
+  df = model_df_strict,
   factor_var = education,
   factor_levels = lvl_education,
   group_var = gender,

@@ -49,9 +49,9 @@ cdhs <- cdhs %>%
     age5 = case_when(
       age_code == 1 ~ "16–24 years",
       age_code == 2 ~ "25–34 years",
-      age_code == 3 ~ "35–54 years",
-      age_code == 4 ~ "55–64 years",
-      age_code == 5 ~ "65+ years",
+      age_code == 3 ~ "35–44 years",
+      age_code == 4 ~ "45–54 years",
+      age_code == 5 ~ "55+ years",
       TRUE ~ NA_character_
     ),
     age5 = factor(age5, levels = lvl_age, ordered = TRUE)
