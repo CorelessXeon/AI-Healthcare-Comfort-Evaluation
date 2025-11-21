@@ -1,11 +1,13 @@
 
-
+# folders
+data_raw/
 
 # R
 .Rhistory
 .Rproj.user/
 .Ruserdata
 .Rprofile
+.RData
 
 # outputs
 output/
@@ -17,6 +19,8 @@ renv/library/
 # OS
 .DS_Store
 Thumbs.db
+
+
 
 # Ignore temporary drafts and notes
 docs/drafts/
