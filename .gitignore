@@ -1,5 +1,3 @@
-
-
 # R
 .Rhistory
 .Rproj.user/
@@ -8,9 +6,12 @@
 .RData
 
 # outputs
-achive/R Code From Collaborators/Kai/outputs
+archive/R Code From Collaborators/Kai/outputs
 
-# artifacts/
+data/
+!data/data_raw
+artifacts/
+
 
 # renv
 renv/library/
@@ -19,7 +20,6 @@ renv/library/
 .DS_Store
 Thumbs.db
 
-
-
-# Ignore temporary drafts and notes
+# Ignore Local drafts and notes
 docs/drafts/
+.RData
