@@ -5,14 +5,22 @@ needed <- c(
   "purrr", "here", "plotly", "glue"
 )
 
-# Install missing packages quietly
-to_install <- setdiff(needed, rownames(installed.packages()))
-if (length(to_install)) {
-  install.packages(to_install, quiet = TRUE)
+# Determine which packages are missing in the renv project library
+installed <- rownames(installed.packages())
+to_install <- setdiff(needed, installed)
+
+# Install only missing packages (not all)
+if (length(to_install) > 0) {
+  message("[setup] Installing missing packages into renv library:")
+  print(to_install)
+  renv::install(to_install)
+} else {
+  message("[setup] All needed packages already installed.")
 }
 
-# Load all packages
+# Load packages
 invisible(lapply(needed, library, character.only = TRUE))
+
 
 # ---- 1) Create project folders ----
 dirs <- c(
@@ -25,14 +33,11 @@ dirs <- c(
 invisible(lapply(dirs, dir.create, recursive = TRUE, showWarnings = FALSE))
 
 # ---- 2) Source utility scripts ----
-if(file.exists("R/utils/common_utils.R")) {
-  source("R/utils/common_utils.R")
+utils_path <- "R/utils/common_utils.R"
+
+if (file.exists(utils_path)) {
+  source(utils_path)
 } else {
   warning("common_utils.R not found in R/utils/")
 }
-
-
-
-
-
 

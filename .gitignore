@@ -1,6 +1,4 @@
 
-# folders
-data_raw/
 
 # R
 .Rhistory
@@ -10,8 +8,9 @@ data_raw/
 .RData
 
 # outputs
-output/
-data_clean/
+achive/R Code From Collaborators/Kai/outputs
+
+# artifacts/
 
 # renv
 renv/library/

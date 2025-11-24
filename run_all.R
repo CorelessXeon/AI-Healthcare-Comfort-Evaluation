@@ -1,11 +1,39 @@
-# MSE609 Group 11 — One-command runner
+# run_all.R
+# Purpose:
+#   Run full pipeline:
+#   (A) ATS2021 replication (01-04)
+#   (B) 2023/2024 new datasets pipeline (05-06)
 
-source("R/01_data_cleaning.R")
-source("R/02_descriptives_table1_strict.R")
-source("R/03_models_Q40_to_Q43.R")
-source("R/04_export_regression_tables.R")
+message("=== Running full multi-dataset pipeline ===")
 
-# Uncomment this after finalizing 3D plots:
-# source("R/05_plots_Q40_to_Q43.R")
+# ---- A) Project setup (shared) ----
+message("\n[Setup] 00_project_setup.R")
+source("R/00_project_setup.R")
 
-message("✅ All scripts executed successfully. Check the 'output' and 'data_clean' folders.")
+# ---- B) ATS2021 replication mainline ----
+message("\n[ATS2021] Replication pipeline")
+ats2021_scripts <- c(
+  "R/01_data_cleaning.R",
+  "R/02_descriptives_table1.R",
+  "R/03_ordinal_logistic_regression.R",
+  "R/04_plots_Q40_to_Q43.R"
+)
+
+for (s in ats2021_scripts) {
+  message(sprintf("\n--- Running: %s ---", s))
+  source(s)
+}
+
+# ---- C) 2023/2024 new datasets branch ----
+message("\n[ATS2023/2024] New datasets pipeline")
+newdata_scripts <- c(
+  "R/05_different_dataset.R",
+  "R/06_plots_different_dataset.R"
+)
+
+for (s in newdata_scripts) {
+  message(sprintf("\n--- Running: %s ---", s))
+  source(s)
+}
+
+message("\n=== All pipelines completed successfully ===")
