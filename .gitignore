@@ -10,7 +10,7 @@ archive/R Code From Collaborators/Kai/outputs
 
 data/
 !data/data_raw
-artifacts/
+# artifacts/
 
 
 # renv
