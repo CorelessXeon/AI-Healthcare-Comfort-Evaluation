@@ -25,7 +25,7 @@ MSE609-Group11-Project/
 │       └── common_utils.R
 │
 ├── data/
-│   ├── data_raw/                # Raw 2021 / 2023 / 2024 files (not tracked)
+│   ├── data_raw/                # Raw 2021 / 2023 / 2024 files
 │   ├── cleaned_dataset.rds
 │   ├── cleaned_dataset_strict.rds
 │   ├── cleaned_dataset_2023.rds
@@ -34,8 +34,7 @@ MSE609-Group11-Project/
 ├── artifacts/
 │   ├── tables/                  # Table 1 and other tabular outputs
 │   ├── plots/                   # 3D figures and visualizations
-│   ├── models/                  # Regression outputs
-│   └── logs/
+│   └── models/                  # Regression outputs
 │
 ├── docs/
 │   └── images/                  # Figures included in README

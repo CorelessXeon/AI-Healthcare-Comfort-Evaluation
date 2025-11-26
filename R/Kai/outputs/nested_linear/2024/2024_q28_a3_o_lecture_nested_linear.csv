@@ -1,0 +1,7 @@
+Parameter,Model_1,Model_2,Model_3,Model_4
+β(age),-0.061,-0.06,-0.048,-0.125
+β(education),NA,0.09,0.103,0.099
+β(age × education),NA,NA,-0.003,-0.002
+β(gender),NA,NA,NA,-0.467
+β(age × gender),NA,NA,NA,0.048
+R²,0.008,0.025,0.025,0.037

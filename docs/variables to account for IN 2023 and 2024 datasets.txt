@@ -9,7 +9,7 @@ Q28_A1 - Q28_A7 + Q29 - Q37
 
 
 2023
-Q31  knowledge about AI
-Q32  comfortable with AI used in healthcare
+Q31  Q40 knowledge about AI
+Q32  Q41 comfortable with AI used in healthcare
 Q33  Q42
 Q34  Q43
