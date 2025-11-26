@@ -1,14 +1,23 @@
 2024
+Q2_Age_Groups
+Q5b_Gender
+q46 Education
+q38 Income
 
-Q28_A1  knowledge about AI
-Q28_A3  comfortable AI used in healthcare
-Q28_A5 Q42
-Q28_A6: The use of AI by health care providers improves my confidence in my disease diagnosis. - Please indicate your level of agreement with the following statements. #interesting to look at
+Q28_A1 Q40 knowledge about AI
+Q28_A3 Q41 comfortable AI used in healthcare
+Q28_A5 Q43 (Wrongly recognized as Q42)
+Q28_A7 Q43 
 
 Q28_A1 - Q28_A7 + Q29 - Q37
 
 
 2023
+q1_age_cat Age
+q5_recoded Gender
+q48 Education
+q40 Income
+
 Q31  Q40 knowledge about AI
 Q32  Q41 comfortable with AI used in healthcare
 Q33  Q42

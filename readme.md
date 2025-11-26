@@ -250,6 +250,13 @@ Example figures and tables used in the analysis are provided in:
 
 ![](docs/images/example_plot.png)
 
-# License
+# Data License & Usage
 
-(To be added.)
+This repository contains analysis code only.
+The raw survey data from the Canadian Digital Health Survey (CDHS) are not included due to licensing restrictions.
+
+The CDHS datasets are provided by Canada Health Infoway and hosted on Borealis, the Canadian Dataverse Repository, within the University of Victoria Dataverse Collection.
+Access to the datasets requires agreement to Infoway’s Custom Dataset Terms, which permit use for academic and research purposes but prohibit redistribution or public sharing of the datasets.
+
+To reproduce the analysis, users must obtain the data directly from Borealis under the appropriate license terms.
+This repository includes only aggregated outputs, statistical summaries, and analysis scripts in compliance with dataset restrictions.

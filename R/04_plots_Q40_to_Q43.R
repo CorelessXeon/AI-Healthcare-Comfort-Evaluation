@@ -3,7 +3,7 @@
 # Purpose:
 #   replicate the 4 3d plots from the paper
 # Input:
-#   data_clean/model_df.csv
+#   data_clean/cleaned_dataset.csv
 # Output:
 #   artifacts/plot/Q40.html
 #   artifacts/plot/Q41.html

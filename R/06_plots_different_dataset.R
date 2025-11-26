@@ -1,14 +1,18 @@
 #############################################
-# 04_plots_Q40_to_Q43.R
+# 06_plots_different_dataset.R
 # Purpose:
-#   replicate the 4 3d plots from the paper
+#   generate new 3D plots via new dataset
 # Input:
 #   data_clean/model_df.csv
 # Output:
-#   artifacts/plot/Q40.html
-#   artifacts/plot/Q41.html
-#   artifacts/plot/Q42.html
-#   artifacts/plot/Q43.html
+#   artifacts/plot/Q40_2023.html
+#   artifacts/plot/Q41_2023.html
+#   artifacts/plot/Q42_2023.html
+#   artifacts/plot/Q43_2023.html
+#   artifacts/plot/Q40_2024.html
+#   artifacts/plot/Q41_2024.html
+#   artifacts/plot/Q42_2024.html
+#   artifacts/plot/Q43_2024.html
 #############################################
 
 # ---- 1) Load cleaned dataset  ----
@@ -19,8 +23,16 @@ df <- read_csv("data/cleaned_dataset_2023.csv", show_col_types = FALSE)
 df$income_num    <- convert_to_num(df$income, lvl_income_2023)
 df$educ_num      <- convert_to_num(df$education, lvl_education_2023)
 df$age_num       <- convert_to_num(df$age5, lvl_age_2023)
-df$gender_num    <- convert_to_num(df$gender, lvl_gender_2023)
-
+# df$gender_num    <- convert_to_num(df$gender, lvl_gender_2023)
+df <- df %>%
+  dplyr::mutate(
+    gender_num = dplyr::case_when(
+      gender == "male"   ~ 1,
+      gender == "female" ~ 2,
+      gender == "other"  ~ 3,
+      TRUE               ~ NA_real_
+    )
+  )
 # DOE Pro (SigmaZone) uses Response Surface Methodology (RSM)
 predictors <- c("age_num", "gender_num", "educ_num", "income_num")
 # y=β0*+i∑ βi*xi (main effects)+i<j∑ βij*xi*xj (interactions)+i∑ βii*xi2 (quadratics)
@@ -77,8 +89,16 @@ df2 <- read_csv("data/cleaned_dataset_2024.csv", show_col_types = FALSE)
 df2$income_num    <- convert_to_num(df2$income, lvl_income_2024)
 df2$educ_num      <- convert_to_num(df2$education, lvl_education_2024)
 df2$age_num       <- convert_to_num(df2$age5, lvl_age_2024)
-df2$gender_num    <- convert_to_num(df2$gender, lvl_gender_2024)
-
+# df2$gender_num    <- convert_to_num(df2$gender, lvl_gender_2024)
+df2 <- df2 %>%
+  dplyr::mutate(
+    gender_num = dplyr::case_when(
+      gender == "male"   ~ 1,
+      gender == "female" ~ 2,
+      gender == "other"  ~ 3,
+      TRUE               ~ NA_real_
+    )
+  )
 # DOE Pro (SigmaZone) uses Response Surface Methodology (RSM)
 predictors <- c("age_num", "gender_num", "educ_num", "income_num")
 # y=β0*+i∑ βi*xi (main effects)+i<j∑ βij*xi*xj (interactions)+i∑ βii*xi2 (quadratics)
