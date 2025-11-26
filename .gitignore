@@ -5,12 +5,12 @@
 .Rprofile
 .RData
 
-# outputs
-# archive/R Code From Collaborators/Kai/outputs
+# dir
+archive/
+data/
+!data/data_raw
+artifacts/
 
-# data/
-# !data/data_raw
-# artifacts/
 
 
 # renv
@@ -20,5 +20,4 @@ renv/library/
 .DS_Store
 Thumbs.db
 
-# Ignore Local drafts and notes
-docs/drafts/
+

@@ -20,16 +20,14 @@ MSE609-Group11-Project/
 │   ├── 03_ordinal_logistic_regression.R
 │   ├── 04_plots_Q40_to_Q43.R
 │   ├── 05_different_dataset.R
-│   └── 06_plots_different_dataset.R
+│   ├── 06_plots_different_dataset.R
+│   └── 07_extension_tables.R
 │   └── utils/
 │       └── common_utils.R
 │
 ├── data/
-│   ├── data_raw/                # Raw 2021 / 2023 / 2024 files
-│   ├── cleaned_dataset.rds
-│   ├── cleaned_dataset_strict.rds
-│   ├── cleaned_dataset_2023.rds
-│   └── cleaned_dataset_2024.rds
+│   └── data_raw/                # Raw 2021 / 2023 / 2024 files
+│       └── readme.md            # Instructions of getting the original dataset
 │
 ├── artifacts/
 │   ├── tables/                  # Table 1 and other tabular outputs
@@ -37,7 +35,8 @@ MSE609-Group11-Project/
 │   └── models/                  # Regression outputs
 │
 ├── docs/
-│   └── images/                  # Figures included in README
+│   └── examples/                # Example Plot
+│       └── q40_2021.png
 │
 ├── renv/                        # renv environment library
 ├── renv.lock                    # Locked package versions
@@ -67,19 +66,19 @@ renv::restore()
 source("run_all.R")
 ```
 
-`run_all.R` will execute scripts `00` through `06` in sequence.
+`run_all.R` will execute scripts `00` through `07` in sequence. It will take 3-7 minutes (depending on the PC hardware).
 
 ------------------------------------------------------------------------
 
 # Analysis Pipeline
 
-## 4.1 `00_project_setup.R`
+## 1. `00_project_setup.R`
 
 **Purpose**
 
 Initializes the project environment, installs missing R packages defined in the `needed` vector, loads the required libraries, creates necessary directories under `artifacts/`, and sources utility functions from `utils/common_utils.R`.
 
-## 4.2 `01_data_cleaning.R`
+## 2. `01_data_cleaning.R`
 
 **Purpose**
 
@@ -93,7 +92,7 @@ Cleans the ATS 2021 dataset and produces a fully processed analytical dataset.
 
 `data/cleaned_dataset.rds`
 
-## 4.3 `02_descriptives_table1.R`
+## 3. `02_descriptives_table1.R`
 
 **Purpose** Produces the descriptive Table 1 used in the ATS 2021 replication.
 
@@ -117,7 +116,7 @@ Written to `artifacts/tables/`:
 
 `table1_replication.html`
 
-## 4.4 `03_ordinal_logistic_regression.R`
+## 4. `03_ordinal_logistic_regression.R`
 
 **Purpose**
 
@@ -140,7 +139,7 @@ Models use `MASS::polr` or equivalent ordinal regression implementations.
 
 ------------------------------------------------------------------------
 
-## 4.5 `04_plots_Q40_to_Q43.R`
+## 5. `04_plots_Q40_to_Q43.R`
 
 **Purpose**
 
@@ -162,7 +161,7 @@ Uses plotting utilities defined in `utils/common_utils.R`.
 
 ------------------------------------------------------------------------
 
-## 4.6 `05_different_dataset.R`
+## 6. `05_different_dataset.R`
 
 ### Purpose
 
@@ -180,7 +179,7 @@ Cleans the CDHS 2023 and CDHS 2024 datasets.
 
 ------------------------------------------------------------------------
 
-## 4.7 `06_plots_different_dataset.R`
+## 7. `06_plots_different_dataset.R`
 
 ### Purpose
 
@@ -197,6 +196,45 @@ Written to `artifacts/plots/`:
 
 -   3D plots for CDHS 2023 (`Q40_2023.html` - `Q43_2023.html`)
 -   3D plots for CDHS 2024 (`Q40_2024.html` - `Q43_2024.html`)
+
+## 8. `07_extension_tables.R`
+
+### Purpose
+
+Generates distributive tables and regression coefficient tables for the cleaned CDHS 2023 and CDHS 2024 datasets.
+
+### Input
+
+-   `cleaned_dataset_2023.rds`
+-   `cleaned_dataset_2024.rds`
+
+### Output
+
+Written to `artifacts/tables/`:
+
+```         
+table1_2023.html
+table1_2023.csv
+appendix_table_1A_2023.html
+appendix_table_1A_2023.csv
+table1_2024.html
+table1_2024.csv
+appendix_table_1A_2024.html
+appendix_table_1A_2024.csv
+```
+
+Written to `artifacts/models/`:
+
+```         
+q40_olr_model_2023.rds
+q41_olr_model_2023.rds
+q42_olr_model_2023.rds
+q43_olr_model_2023.rds
+q40_olr_model_2024.rds
+q41_olr_model_2024.rds
+q42_olr_model_2024.rds
+q43_olr_model_2024.rds
+```
 
 ------------------------------------------------------------------------
 
@@ -238,25 +276,22 @@ cleaned_dataset_strict.rds       |
                   \                             /
                    \                           /
                     v                         v
-                    06_plots_different_dataset.R
+          06_plots_different_dataset.R & 07_extension_tables.R
                              |
                              v
-                     (3D plots for 2023/2024)
+ (3D plots, distributive tables and regression coefficient tables for 2023/2024)
 ```
 
 # Example Outputs
 
 Example figures and tables used in the analysis are provided in:
 
-![](docs/images/example_plot.png)
+![](docs/examples/q40_2021.png)
 
 # Data License & Usage
 
-This repository contains analysis code only.
-The raw survey data from the Canadian Digital Health Survey (CDHS) are not included due to licensing restrictions.
+This repository contains analysis code only. The raw survey data from the Canadian Digital Health Survey (CDHS) are not included due to licensing restrictions.
 
-The CDHS datasets are provided by Canada Health Infoway and hosted on Borealis, the Canadian Dataverse Repository, within the University of Victoria Dataverse Collection.
-Access to the datasets requires agreement to Infoway’s Custom Dataset Terms, which permit use for academic and research purposes but prohibit redistribution or public sharing of the datasets.
+The CDHS datasets are provided by Canada Health Infoway and hosted on Borealis, the Canadian Dataverse Repository, within the University of Victoria Dataverse Collection. Access to the datasets requires agreement to Infoway’s Custom Dataset Terms, which permit use for academic and research purposes but prohibit redistribution or public sharing of the datasets.
 
-To reproduce the analysis, users must obtain the data directly from Borealis under the appropriate license terms.
-This repository includes only aggregated outputs, statistical summaries, and analysis scripts in compliance with dataset restrictions.
+To reproduce the analysis, users must obtain the data directly from Borealis under the appropriate license terms. This repository includes only aggregated outputs, statistical summaries, and analysis scripts in compliance with dataset restrictions.

@@ -28,7 +28,8 @@ for (s in ats2021_scripts) {
 message("\n[ATS2023/2024] New datasets pipeline")
 newdata_scripts <- c(
   "R/05_different_dataset.R",
-  "R/06_plots_different_dataset.R"
+  "R/06_plots_different_dataset.R",
+  "R/07_extension_tables.R"
 )
 
 for (s in newdata_scripts) {
