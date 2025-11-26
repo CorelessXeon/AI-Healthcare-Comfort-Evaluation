@@ -7,9 +7,9 @@
 
 # dir
 archive/
-data/
+# data/
 !data/data_raw
-artifacts/
+# artifacts/
 
 
 
