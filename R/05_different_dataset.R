@@ -52,7 +52,12 @@ process_different_dataset(dataset_path= here("data", "data_raw", "Infoway CDHS 2
                             "q43_un" = "q28_a6", # note this is totally different from q43: it says The use of AI by health care providers improves my confidence in my disease diagnosis.
                             "age_new" = "q2_age_groups", #note age is 16-24 then 25-34 then 35-54 then 55-64 then 65+
                             "gender" = "q5b_gender", # note gender is 1 for female, 2 for male 3 for other
-                            "q66_un" = "q46", # education is 1 no certificate, diplona or degree, 2 Secondary (high) school diploma or equivalency certificate, 3 Apprenticeship or trades certificate or diploma, College, 4 CEGEP or other non-university certificate or diploma, 5 University certificate or diploma below bachelor level, 6 University certificate, diploma or degree at bachelor level or above
+                            "q66_un" = "q46", # education is 1 no certificate, diplona or degree,
+                            # 2 Secondary (high) school diploma or equivalency certificate,
+                            # 3 Apprenticeship or trades certificate or diploma, College,
+                            # 4 CEGEP or other non-university certificate or diploma,
+                            # 5 University certificate or diploma below bachelor level,
+                            # 6 University certificate, diploma or degree at bachelor level or above
                             "q55_un" = "q38"),
                             gender_levels = c("female", "male", "other"),
                             income_levels = c("< $40,000", "$40,000-$59,000", "$60,000-$79,000", "$80,000-$99,000", "$100,000-$149,000", ">$150,000"),
