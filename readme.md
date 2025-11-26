@@ -1,6 +1,6 @@
 # Project Overview
 
-This repository contains a complete and reproducible pipeline for replicating and extending the analysis based on the **ATS 2021 dataset**, as well as processing and visualizing **ATS 2023** and **ATS 2024** survey datasets. The project includes:
+This repository contains a complete and reproducible pipeline for replicating and extending the analysis based on the **ATS 2021 dataset**, as well as processing and visualizing **CDHS 2023** and **CDHS 2024** datasets. The project includes:
 
 -   Data cleaning for all datasets (2021, 2023, 2024)
 -   Construction of descriptive statistics (Table 1–style outputs)
@@ -52,7 +52,8 @@ MSE609-Group11-Project/
 ## 1. Clone the Repository
 
 ```         
-git clone <https://github.com/CorelessXeon/MSE609-Group11-Project.git>
+git clone https://github.com/CorelessXeon/MSE609-Group11-Project.git
+cd MSE609-Group11-Project
 ```
 
 ## 2. Restore the R Environment
@@ -67,50 +68,188 @@ renv::restore()
 source("run_all.R")
 ```
 
+`run_all.R` will execute scripts `00` through `06` in sequence.
+
+------------------------------------------------------------------------
+
 # Analysis Pipeline
 
-## 4.1 00_project_setup.R
+## 4.1 `00_project_setup.R`
 
-Initializes the environment, installs required packages, loads libraries, creates folders, and sources utilities.
+**Purpose**
 
-## 4.2 01_data_cleaning.R
+Initializes the project environment, installs missing R packages defined in the `needed` vector, loads the required libraries, creates necessary directories under `artifacts/`, and sources utility functions from `utils/common_utils.R`.
 
-Cleans the ATS 2021 dataset.
+## 4.2 `01_data_cleaning.R`
 
-**Output:**\
-- cleaned_dataset.rds
+**Purpose**
 
-## 4.3 02_descriptives_table1.R
+Cleans the ATS 2021 dataset and produces a fully processed analytical dataset.
 
-Generates: - cleaned_dataset_strict.rds\
-- table1_replication.csv\
-- table1_replication.html
+**Input**
 
-## 4.4 03_ordinal_logistic_regression.R
+`data/data_raw/ATS2021 Dataset_Dataverse posting.sav`
 
-Uses cleaned_dataset.rds to fit ordinal logistic regression models.
+**Output**
 
-## 4.5 04_plots_Q40_to_Q43.R
+`data/cleaned_dataset.rds`
 
-Uses cleaned_dataset.rds to generate 3D plots.
+## 4.3 `02_descriptives_table1.R`
 
-## 4.6 05_different_dataset.R
+**Purpose** Produces the descriptive Table 1 used in the ATS 2021 replication.
 
-Cleans ATS 2023 and 2024 datasets: - cleaned_dataset_2023.rds - cleaned_dataset_2024.rds
+**Strict filtering logic** This script performs an additional cleaning step not used elsewhere:
 
-## 4.7 06_plots_different_dataset.R
+All observations with any **NA** in **Q40–Q43** are **removed**.
 
-Produces 3D plots for 2023 and 2024 datasets.
+This yields:
+
+`data/cleaned_dataset_strict.rds`
+
+**Input**
+
+`data/cleaned_dataset.rds`
+
+**Output**
+
+Written to `artifacts/tables/`:
+
+`table1_replication.csv`
+
+`table1_replication.html`
+
+## 4.4 `03_ordinal_logistic_regression.R`
+
+**Purpose**
+
+Fits ordinal logistic regression models for outcomes Q40–Q43 using the cleaned ATS 2021 dataset.
+
+**Input**
+
+-   `data/cleaned_dataset.rds`
+
+**Output**
+
+Written to `artifacts/models/`:
+
+-   Model objects (`q40_olr_model.rds` - `q43_olr_model.rds`)
+-   Regression coefficient tables (`appendix_table_1A_replication.csv` / `appendix_table_1A_replication.html`)
+
+**Notes**
+
+Models use `MASS::polr` or equivalent ordinal regression implementations.
+
+------------------------------------------------------------------------
+
+## 4.5 `04_plots_Q40_to_Q43.R`
+
+**Purpose**
+
+Generates 3D visualizations of model-based response surfaces for Q40–Q43.
+
+### Input
+
+-   `data/cleaned_dataset.rds`
+
+**Output**
+
+Written to `artifacts/plots/`:
+
+-   3D rendered figures (`Q40.html` - `Q43.html`)
+
+**Notes**
+
+Uses plotting utilities defined in `utils/common_utils.R`.
+
+------------------------------------------------------------------------
+
+## 4.6 `05_different_dataset.R`
+
+### Purpose
+
+Cleans the CDHS 2023 and CDHS 2024 datasets.
+
+### Input
+
+-   `data/data_raw/CDHS2023_Dataset_Dataverse-posting.sav`
+-   `data/data_raw/Infoway CDHS 2024 SPSS Raw Data_for Dataverse.sav`
+
+### Output
+
+-   `data/cleaned_dataset_2023.rds`
+-   `data/cleaned_dataset_2024.rds`
+
+------------------------------------------------------------------------
+
+## 4.7 `06_plots_different_dataset.R`
+
+### Purpose
+
+Generates 3D visualizations for the cleaned CDHS 2023 and CDHS 2024 datasets.
+
+### Input
+
+-   `cleaned_dataset_2023.rds`
+-   `cleaned_dataset_2024.rds`
+
+### Output
+
+Written to `artifacts/plots/`:
+
+-   3D plots for CDHS 2023 (`Q40_2023.html` - `Q43_2023.html`)
+-   3D plots for CDHS 2024 (`Q40_2024.html` - `Q43_2024.html`)
+
+------------------------------------------------------------------------
 
 # Script Dependency Graph
 
-Raw 2021 Data ↓ 01_data_cleaning.R ↓ cleaned_dataset.rds ───→ 03_ordinal_logistic_regression.R → 04_plots_Q40_to_Q43.R ↓ 02_descriptives_table1.R ↓ cleaned_dataset_strict.rds → Table 1 outputs
+```         
+          Raw ATS 2021 Data
+                  |
+                  v
+        01_data_cleaning.R
+                  |
+                  v
+       cleaned_dataset.rds
+         |        |         \
+         |        |          \
+         |        |           \
+         |        |            \
+         v        v             v
+ 02_descriptives_table1.R   03_ordinal_logistic_regression.R
+         |                       |
+         v                       |
+cleaned_dataset_strict.rds       |
+         |                       |
+         v                       v
+  (Table 1 outputs)      04_plots_Q40_to_Q43.R
+                                 |
+                                 v
+                         (3D model plots)
 
-Raw 2023 Data → 05_different_dataset.R → cleaned_dataset_2023.rds → 06_plots_different_dataset.R Raw 2024 Data → 05_different_dataset.R → cleaned_dataset_2024.rds → 06_plots_different_dataset.R
+
+          Raw ATS 2023 Data             Raw ATS 2024 Data
+                 |                               |
+                 v                               v
+        05_different_dataset.R (cleaning both datasets)
+                 |                               |
+                 v                               v
+ cleaned_dataset_2023.rds          cleaned_dataset_2024.rds
+                 \                               /
+                  \                             /
+                   \                           /
+                    v                         v
+                    06_plots_different_dataset.R
+                             |
+                             v
+                     (3D plots for 2023/2024)
+```
 
 # Example Outputs
 
-Images may be added under `docs/images/` and referenced using:
+Example figures and tables used in the analysis are provided in:
+
+![](docs/images/example_plot.png)
 
 # License
 
