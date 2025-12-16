@@ -1,10 +1,10 @@
-# AI Healthcare Comfort Evaluation
+ AI Healthcare Comfort Evaluation
 
 A reproducible R pipeline for analyzing attitudes toward digital health services across multiple Canadian survey waves. The project cleans raw survey exports, builds descriptive summaries, trains ordinal logistic regression models, and generates 3D visualizations that highlight comfort levels with virtual care.
 
-Across the project, we validated the key findings of Li et al. (2025) by replicating the core descriptive statistics, ordinal logistic regression, and 3D surfaces (Table 1, Appendix A1, Figures 1–4). That work surfaced the only notable data nuance—age bins in the source files cannot perfectly match the paper’s reported groups—while confirming that the original demographic patterns of AI knowledge and comfort hold up under independent reproduction.
+Across the project, we validated the key findings of [Li et al. (2025)](https://www.sciencedirect.com/science/article/pii/S0033350624004918) by replicating the core descriptive statistics, ordinal logistic regression, and 3D surfaces (Table 1, Appendix A1, Figures 1–4). That work surfaced the only notable data nuance—age bins in the source files cannot perfectly match the paper’s reported groups—while confirming that the original demographic patterns of AI knowledge and comfort hold up under independent reproduction.
 
-We then extended the analysis to the 2023 and 2024 Canadian Digital Health Survey waves to add a longitudinal lens. The new runs show how comfort and knowledge have evolved (with many surfaces flattening), where demographic gradients remain stable (e.g., gender gaps in comfort, higher comfort among higher income/education groups), and where fresh patterns emerge (e.g., 2024 seniors reporting unexpectedly high comfort with de-identified data use). Along the way, we documented filtering decisions, reference category alignment, and end-to-end reproducibility steps to make future reruns reliable and transparent.
+We then extended the analysis to the [2023](https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.5683/SP3/5C7HSO) and [2024](https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.5683/SP3/MI0HZP) Canadian Digital Health Survey waves to add a longitudinal lens. The new runs show how comfort and knowledge have evolved (with many surfaces flattening), where demographic gradients remain stable (e.g., gender gaps in comfort, higher comfort among higher income/education groups), and where fresh patterns emerge (e.g., 2024 seniors reporting unexpectedly high comfort with de-identified data use). Along the way, we documented filtering decisions, reference category alignment, and end-to-end reproducibility steps to make future reruns reliable and transparent.
 
 ## Why this repo?
 - **End-to-end pipeline**: One command runs cleaning, modeling, and visualization for the 2021 ATS dataset plus 2023/2024 CDHS waves.
@@ -24,6 +24,10 @@ AI-Healthcare-Comfort-Evaluation/
 ├── renv.lock               # Locked R package versions
 └── readme.md               # Project guide (this file)
 ```
+## Full report
+For methodological details, interpretation of results, and discussion beyond what is shown in the generated tables and figures, please see the accompanying project report `docs/MSE_609_Project_Report_Group_11.pdf`
+
+The report provides the full narrative context, assumptions, and limitations underlying the analyses implemented in this repository.
 
 ## Quick start
 1. **Clone the repository**
@@ -52,12 +56,12 @@ AI-Healthcare-Comfort-Evaluation/
 - **07_extension_tables.R** – Produces distributive and regression coefficient tables for 2023/2024 and writes them to `artifacts/tables/` and `artifacts/models/`.
 
 ## Example outputs
-Preview figures in `docs/examples/`, such as the Q40 2021 comfort plot:
+Preview figures in `docs/examples/`, such as the Q40 2021 knowledge about AI plot:
 
 ![Q40 2021 plot](docs/examples/q40_2021.png)
 
 ## Data access
-Raw Canadian Digital Health Survey files are **not included** due to licensing. Request access from Borealis (University of Victoria Dataverse) under Infoway’s Custom Dataset Terms. Once obtained, place the files in `data/data_raw/` following the instructions in `data/data_raw/readme.md` and rerun the pipeline.
+Raw Canadian Digital Health Survey files are **not included** due to licensing. you dan download the dataset directly from [borealisdata.ca](https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.5683/SP3/CEYG42). Once obtained, place the files in `data/data_raw/` follow the naming noted in `data/data_raw/readme.md` and rerun the pipeline.
 
 ## Contributing
-Contributions that improve reproducibility, documentation, or analysis robustness are welcome. Please open an issue or pull request with proposed changes.
+Contributions that improve reproducibility, documentation, or analysis robustness are welcome. Please open an issue or pull request with proposed changes or reach out one of the contributors.
