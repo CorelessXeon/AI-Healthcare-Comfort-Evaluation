@@ -1,297 +1,63 @@
-# Project Overview
+# AI Healthcare Comfort Evaluation
 
-This repository contains a complete and reproducible pipeline for replicating and extending the analysis based on the **ATS 2021 dataset**, as well as processing and visualizing **CDHS 2023** and **CDHS 2024** datasets. The project includes:
+A reproducible R pipeline for analyzing attitudes toward digital health services across multiple Canadian survey waves. The project cleans raw survey exports, builds descriptive summaries, trains ordinal logistic regression models, and generates 3D visualizations that highlight comfort levels with virtual care.
 
--   Data cleaning for all datasets (2021, 2023, 2024)
--   Construction of descriptive statistics (Table 1–style outputs)
--   Ordinal logistic regression modeling
--   3D visualizations of predicted relationships
--   Full pipeline automation through `run_all.R`
--   Reproducible computational environment via **renv**
+Across the project, we validated the key findings of Li et al. (2025) by replicating the core descriptive statistics, ordinal logistic regression, and 3D surfaces (Table 1, Appendix A1, Figures 1–4). That work surfaced the only notable data nuance—age bins in the source files cannot perfectly match the paper’s reported groups—while confirming that the original demographic patterns of AI knowledge and comfort hold up under independent reproduction.
 
-All results (tables, figures, and model outputs) are written to the `artifacts/` directory.
+We then extended the analysis to the 2023 and 2024 Canadian Digital Health Survey waves to add a longitudinal lens. The new runs show how comfort and knowledge have evolved (with many surfaces flattening), where demographic gradients remain stable (e.g., gender gaps in comfort, higher comfort among higher income/education groups), and where fresh patterns emerge (e.g., 2024 seniors reporting unexpectedly high comfort with de-identified data use). Along the way, we documented filtering decisions, reference category alignment, and end-to-end reproducibility steps to make future reruns reliable and transparent.
 
-```         
-MSE609-Group11-Project/
-├── R/
-│   ├── 00_project_setup.R
-│   ├── 01_data_cleaning.R
-│   ├── 02_descriptives_table1.R
-│   ├── 03_ordinal_logistic_regression.R
-│   ├── 04_plots_Q40_to_Q43.R
-│   ├── 05_different_dataset.R
-│   ├── 06_plots_different_dataset.R
-│   └── 07_extension_tables.R
-│   └── utils/
-│       └── common_utils.R
-│
+## Why this repo?
+- **End-to-end pipeline**: One command runs cleaning, modeling, and visualization for the 2021 ATS dataset plus 2023/2024 CDHS waves.
+- **Reproducible environment**: `renv` lockfile pins all R dependencies for consistent results.
+- **Ready-made outputs**: Tables, plots, and model objects are written to `artifacts/` for quick review.
+
+## Repository layout
+```
+AI-Healthcare-Comfort-Evaluation/
+├── R/                      # Analysis scripts (00–07) and shared utilities
+│   └── utils/common_utils.R
 ├── data/
-│   └── data_raw/                # Raw 2021 / 2023 / 2024 files
-│       └── readme.md            # Instructions of getting the original dataset
-│
-├── artifacts/
-│   ├── tables/                  # Table 1 and other tabular outputs
-│   ├── plots/                   # 3D figures and visualizations
-│   └── models/                  # Regression outputs
-│
-├── docs/
-│   └── examples/                # Example Plot
-│       └── q40_2021.png
-│
-├── renv/                        # renv environment library
-├── renv.lock                    # Locked package versions
-├── run_all.R                    # Main pipeline executor
-├── MSE609-Group11-Project.Rproj
-└── README.md
+│   └── data_raw/           # Raw survey files (not included)
+├── artifacts/              # Generated tables, plots, and models
+├── docs/examples/          # Sample plots
+├── run_all.R               # Entry point that orchestrates the full pipeline
+├── renv.lock               # Locked R package versions
+└── readme.md               # Project guide (this file)
 ```
 
-# Quick Start
-
-## 1. Clone the Repository
-
-```         
-git clone https://github.com/CorelessXeon/MSE609-Group11-Project.git
-cd MSE609-Group11-Project
-```
-
-## 2. Restore the R Environment
-
-```         
-renv::restore()
-```
-
-## 3. Run the Full Pipeline
-
-```         
-source("run_all.R")
-```
-
-`run_all.R` will execute scripts `00` through `07` in sequence. It will take 3-7 minutes (depending on the PC hardware).
-
-------------------------------------------------------------------------
-
-# Analysis Pipeline
-
-## 1. `00_project_setup.R`
-
-**Purpose**
-
-Initializes the project environment, installs missing R packages defined in the `needed` vector, loads the required libraries, creates necessary directories under `artifacts/`, and sources utility functions from `utils/common_utils.R`.
-
-## 2. `01_data_cleaning.R`
-
-**Purpose**
-
-Cleans the ATS 2021 dataset and produces a fully processed analytical dataset.
-
-**Input**
-
-`data/data_raw/ATS2021 Dataset_Dataverse posting.sav`
-
-**Output**
-
-`data/cleaned_dataset.rds`
-
-## 3. `02_descriptives_table1.R`
-
-**Purpose** Produces the descriptive Table 1 used in the ATS 2021 replication.
-
-**Strict filtering logic** This script performs an additional cleaning step not used elsewhere:
-
-All observations with any **NA** in **Q40–Q43** are **removed**.
-
-This yields:
-
-`data/cleaned_dataset_strict.rds`
-
-**Input**
-
-`data/cleaned_dataset.rds`
-
-**Output**
-
-Written to `artifacts/tables/`:
-
-`table1_replication.csv`
-
-`table1_replication.html`
-
-## 4. `03_ordinal_logistic_regression.R`
-
-**Purpose**
-
-Fits ordinal logistic regression models for outcomes Q40–Q43 using the cleaned ATS 2021 dataset.
-
-**Input**
-
--   `data/cleaned_dataset.rds`
-
-**Output**
-
-Written to `artifacts/models/`:
-
--   Model objects (`q40_olr_model.rds` - `q43_olr_model.rds`)
--   Regression coefficient tables (`appendix_table_1A_replication.csv` / `appendix_table_1A_replication.html`)
-
-**Notes**
-
-Models use `MASS::polr` or equivalent ordinal regression implementations.
-
-------------------------------------------------------------------------
-
-## 5. `04_plots_Q40_to_Q43.R`
-
-**Purpose**
-
-Generates 3D visualizations of model-based response surfaces for Q40–Q43.
-
-### Input
-
--   `data/cleaned_dataset.rds`
-
-**Output**
-
-Written to `artifacts/plots/`:
-
--   3D rendered figures (`Q40.html` - `Q43.html`)
-
-**Notes**
-
-Uses plotting utilities defined in `utils/common_utils.R`.
-
-------------------------------------------------------------------------
-
-## 6. `05_different_dataset.R`
-
-### Purpose
-
-Cleans the CDHS 2023 and CDHS 2024 datasets.
-
-### Input
-
--   `data/data_raw/CDHS2023_Dataset_Dataverse-posting.sav`
--   `data/data_raw/Infoway CDHS 2024 SPSS Raw Data_for Dataverse.sav`
-
-### Output
-
--   `data/cleaned_dataset_2023.rds`
--   `data/cleaned_dataset_2024.rds`
-
-------------------------------------------------------------------------
-
-## 7. `06_plots_different_dataset.R`
-
-### Purpose
-
-Generates 3D visualizations for the cleaned CDHS 2023 and CDHS 2024 datasets.
-
-### Input
-
--   `cleaned_dataset_2023.rds`
--   `cleaned_dataset_2024.rds`
-
-### Output
-
-Written to `artifacts/plots/`:
-
--   3D plots for CDHS 2023 (`Q40_2023.html` - `Q43_2023.html`)
--   3D plots for CDHS 2024 (`Q40_2024.html` - `Q43_2024.html`)
-
-## 8. `07_extension_tables.R`
-
-### Purpose
-
-Generates distributive tables and regression coefficient tables for the cleaned CDHS 2023 and CDHS 2024 datasets.
-
-### Input
-
--   `cleaned_dataset_2023.rds`
--   `cleaned_dataset_2024.rds`
-
-### Output
-
-Written to `artifacts/tables/`:
-
-```         
-table1_2023.html
-table1_2023.csv
-appendix_table_1A_2023.html
-appendix_table_1A_2023.csv
-table1_2024.html
-table1_2024.csv
-appendix_table_1A_2024.html
-appendix_table_1A_2024.csv
-```
-
-Written to `artifacts/models/`:
-
-```         
-q40_olr_model_2023.rds
-q41_olr_model_2023.rds
-q42_olr_model_2023.rds
-q43_olr_model_2023.rds
-q40_olr_model_2024.rds
-q41_olr_model_2024.rds
-q42_olr_model_2024.rds
-q43_olr_model_2024.rds
-```
-
-------------------------------------------------------------------------
-
-# Script Dependency Graph
-
-```         
-          Raw ATS 2021 Data
-                  |
-                  v
-        01_data_cleaning.R
-                  |
-                  v
-       cleaned_dataset.rds
-         |        |         \
-         |        |          \
-         |        |           \
-         |        |            \
-         v        v             v
- 02_descriptives_table1.R   03_ordinal_logistic_regression.R
-         |                       |
-         v                       |
-cleaned_dataset_strict.rds       |
-         |                       |
-         v                       v
-  (Table 1 outputs)      04_plots_Q40_to_Q43.R
-                                 |
-                                 v
-                         (3D model plots)
-
-
-          Raw ATS 2023 Data             Raw ATS 2024 Data
-                 |                               |
-                 v                               v
-        05_different_dataset.R (cleaning both datasets)
-                 |                               |
-                 v                               v
- cleaned_dataset_2023.rds          cleaned_dataset_2024.rds
-                 \                               /
-                  \                             /
-                   \                           /
-                    v                         v
-          06_plots_different_dataset.R & 07_extension_tables.R
-                             |
-                             v
- (3D plots, distributive tables and regression coefficient tables for 2023/2024)
-```
-
-# Example Outputs
-
-Example figures and tables used in the analysis are provided in:
-
-![](docs/examples/q40_2021.png)
-
-# Data License & Usage
-
-This repository contains analysis code only. The raw survey data from the Canadian Digital Health Survey (CDHS) are not included due to licensing restrictions.
-
-The CDHS datasets are provided by Canada Health Infoway and hosted on Borealis, the Canadian Dataverse Repository, within the University of Victoria Dataverse Collection. Access to the datasets requires agreement to Infoway’s Custom Dataset Terms, which permit use for academic and research purposes but prohibit redistribution or public sharing of the datasets.
-
-To reproduce the analysis, users must obtain the data directly from Borealis under the appropriate license terms. This repository includes only aggregated outputs, statistical summaries, and analysis scripts in compliance with dataset restrictions.
+## Quick start
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/CorelessXeon/MSE609-Group11-Project.git
+   cd MSE609-Group11-Project
+   ```
+2. **Restore the R environment**
+   ```r
+   renv::restore()
+   ```
+3. **Run the full pipeline**
+   ```r
+   source("run_all.R")
+   ```
+   `run_all.R` executes scripts `00`–`07` sequentially and writes results to `artifacts/`.
+
+## What each script does
+- **00_project_setup.R** – Installs missing packages, loads libraries, creates output folders, and sources `utils/common_utils.R`.
+- **01_data_cleaning.R** – Cleans the ATS 2021 dataset and saves `cleaned_dataset.rds`.
+- **02_descriptives_table1.R** – Builds Table 1 for the ATS 2021 replication using strict filtering of Q40–Q43 responses.
+- **03_ordinal_logistic_regression.R** – Fits ordinal logistic regression models for the ATS 2021 dataset and exports model objects.
+- **04_plots_Q40_to_Q43.R** – Creates interactive 3D plots for Q40–Q43 based on the 2021 models.
+- **05_different_dataset.R** – Cleans CDHS 2023 and CDHS 2024 survey data and saves `cleaned_dataset_2023.rds` and `cleaned_dataset_2024.rds`.
+- **06_plots_different_dataset.R** – Generates 3D visualizations for the 2023 and 2024 datasets.
+- **07_extension_tables.R** – Produces distributive and regression coefficient tables for 2023/2024 and writes them to `artifacts/tables/` and `artifacts/models/`.
+
+## Example outputs
+Preview figures in `docs/examples/`, such as the Q40 2021 comfort plot:
+
+![Q40 2021 plot](docs/examples/q40_2021.png)
+
+## Data access
+Raw Canadian Digital Health Survey files are **not included** due to licensing. Request access from Borealis (University of Victoria Dataverse) under Infoway’s Custom Dataset Terms. Once obtained, place the files in `data/data_raw/` following the instructions in `data/data_raw/readme.md` and rerun the pipeline.
+
+## Contributing
+Contributions that improve reproducibility, documentation, or analysis robustness are welcome. Please open an issue or pull request with proposed changes.
